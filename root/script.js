@@ -132,6 +132,7 @@ function restartGame() {
     document.querySelector(`#song-input`).classList.remove(`hidden`);
     document.querySelector(".final-score").classList.add('hidden');
     answerButton.textContent = "Enter";
+    document.querySelector(`#background-image2`).classList.add(`hidden`);
     updateLifeBar();
     continueGame();
 }
@@ -150,7 +151,9 @@ function playAgain(){
 function shuffle() {
     document.getElementById('song-input').value = "";
     if (playlist.length > 0) {
+        playlist.splice(playlist.indexOf(currentSong), 1);
         let randomIndex = Math.floor(Math.random() * playlist.length);
+        console.log(playlist.length);
         currentSong = playlist[randomIndex];
         while (!currentSong.preview_mp3) {
             playlist.splice(playlist.indexOf(currentSong), 1);
