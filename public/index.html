@@ -12,7 +12,8 @@
     <body>
         <audio 
             id="currentSong" 
-            src="audio1.mp3">
+            src="https://p.scdn.co/mp3-preview/180193873467a5b2e3b83c7be6f56694fb48d80c?cid=24bca80b252842bf85759b186bcce44f"
+            crossorigin="anonymous">
         </audio>
         <div class="overlay"></div>
             <!-- <image
@@ -33,25 +34,29 @@
             <div id="start-menu">
                 <div id="logo">
                     <h2>
-                    Guess the song!
+                    So you like music? Name every song.
                     </h2>
                 </div>
-                <button class="game-button def">&#9658 Play from Default Playlist</button>
-                <button class="game-button submit-playlist" onclick="showPlaylistMenu()">&#9658 Play from Spotify Playlist</button>
+                <button class="game-button def"> &#9658 Play from Default Playlist</button>
+                <button class="game-button" onclick="showPlaylistMenu()">&#9658 Play from Spotify Playlist</button>
             </div>
             <form id="playlist-menu">
                 <label for=playlist-input><h3>Enter playlist link:<br></h3></label>
                 <input id=playlist-input></input>
-                <button class="game-button form-button playlist-button">Enter</button>
+                <button class="game-button playlist-button">Enter</button>
             </form> 
             <div id="main-game">
                 <div id="game-panel">
                     <div id="score-display">Score: 10000</div>
-                    <div id="correct-display">3 Tries Remaining</div>
+                    <div id="attempts-display">Lives: </div>
                 </div>
-                <form>
-                    <label for=song-input><h3>What's this song?<br></h3></label>
+                <form autocomplete="off">
+                    <label for=song-input><h3 id='title'>What&#39s this song?<br></h3></label>
                     <img id="song-image" src="https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999">
+                    <br>
+                    <div id="timer-container">
+                        <div id="timer"></div>
+                    </div>
                     <br>
                     <input id="song-input"></input>
                     <br>
@@ -64,7 +69,7 @@
 <script src="circular-audio-wave.min.js"></script>
   <script>
     let wave = new Wave();
-    const options = {type:"bars"};
+    const options = {type:"cubes", stroke:"0.5", colors: ["rgb(30, 215, 96), rgb(130, 90, 56)"]};
     wave.fromElement("currentSong","background-image", options);
   </script>
   <script src="script.js"></script>

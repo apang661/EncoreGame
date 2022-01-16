@@ -11,6 +11,7 @@ body {
   font-size: 20px;
   height: 100%;
   overflow: hidden;
+  background-color: rgba(25, 20, 20);
 }
 
 /* header {
@@ -63,6 +64,7 @@ body {
   padding-bottom: 24px;
   text-decoration: none;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
 }
 
 
@@ -80,14 +82,14 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(1.5px);
+  background-color: rgb(25, 20, 20, 0.7);
+  /* backdrop-filter: blur(1.5px); */
   z-index: 5;
 }
 
 #background-image {
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color: rgba(25, 20, 20);
 }
 
@@ -116,32 +118,36 @@ h2 {
   /* font-family: "Press Start 2P", sans-serif; */
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 60px;
-  color: rgb(30, 215, 96);
+  color: #fff;
 }
 
 h3 {
   font-size: 30px;
-  color: rgb(30, 215, 96);
+  color: #fff;
 }
 
 #start-menu {
-  display: none;
+  display: block;
 }
 
 .game-button {
+  color: rgba(25, 20, 20);
   width: 15rem;
   height: 4rem;
   border-radius: 5rem;
-  background-color: rgb(30, 215, 96);
-  margin-left: 2rem;
-  margin-right: 2rem;
+  background-color: rgb(30,215,96);
+  margin-left: 2em;
+  margin-right: 2em;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 16px;
   transition: background-color 0.3s;
+  font-weight: bold;
 }
 
 .game-button:hover {
-  background-color: rgb(22, 189, 80);
+  background-color: rgb(35, 240, 106);
+  font-weight: bold;
+  font-style: italic;
 }
 
 #playlist-menu {
@@ -159,10 +165,18 @@ h3 {
   width: 300px;
 }
 
-.form-button {
+.playlist-button {
+  color: rgba(25, 20, 20);
+  font-weight: bold;
   width: 8rem;
   height: 3rem;
   border-radius: 3rem;
+}
+
+.playlist-button:hover {
+  color: rgba(25, 20, 20);
+  font-weight: bold;
+  font-style: italic;
 }
 
 #play-button {
@@ -170,10 +184,6 @@ h3 {
   height: 6rem;
   border-radius: 3rem;
   font-size: 40px;
-}
-
-#main-game {
-  margin: 10% 0 15% 0;
 }
 
 #song-input {
@@ -186,6 +196,8 @@ h3 {
 
 #song-image {
   margin: 20px;
+  width: 185px;
+  height: 174px;
 }
 /* 
 #song-input button {
@@ -194,8 +206,7 @@ h3 {
 
 #main-game {
   margin: 10% 20% 10% 20%;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: none;
 }
 
 #game-panel {
@@ -208,6 +219,27 @@ h3 {
   float: left;
 }
 
-#correct-display {
+#attempts-display {
   float: right;
+}
+
+.life {
+  width: 1rem;
+}
+
+#timer-container {
+  width: 35%;
+  margin-left: 32.5%;
+  height: 5px;
+  border-radius: 6px;
+  background-color: rgb(83,83,83);
+  z-index: 7;
+  display: flex;
+}
+
+#timer {
+  width: 0%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: rgb(179,179,179);
 }

@@ -2,6 +2,9 @@ const request = require(`request`);
 const axios = require("axios");
 require('dotenv').config({ path: './.env' });
 const qs = require("qs");
+const res = require("express/lib/response");
+const { response } = require("express");
+const { all } = require("express/lib/application");
 
 let token = "";
 let all_playlist_songs = [];
@@ -14,18 +17,28 @@ async function add_spotify_playlist(link, callback) {
     },
   };
   const playlist_id_split = link.split("/")[4];
-  const playlist_id = playlist_id_split.substr(
+  let playlist_id;
+  if (playlist_id_split){
+    playlist_id = playlist_id_split.substr(
     0,
     playlist_id_split.indexOf("?")
   );
+  } else {
+    callback(`no playlist found`);
+    return;
+  }
   let url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?market=ES`;
   try {
     let response = await axios.get(url, options);
     const playlist = response.data;
+    let fixed_track_name = playlist.items[i].track.name;
+    if (fixed_track_name.includes("(")) {
+      fixed_track_name.substr(0, fixed_track_name.indexOf('('));
+    }
     for (let i = 0; i < playlist.items.length; i++) {
       let playlist_data = {
         artist_name: playlist.items[i].track.album.artists[0].name,
-        track_name: playlist.items[i].track.name,
+        track_name: fixed_track_name,
         track_image: playlist.items[i].track.album.images[0].url,
         preview_mp3: playlist.items[i].track.preview_url,
       };
@@ -65,8 +78,6 @@ const getToken = async (
     console.log(err);
   }
 };
-
-
 
 module.exports = {
   add_spotify_playlist: add_spotify_playlist,
