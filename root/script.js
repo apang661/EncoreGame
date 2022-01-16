@@ -43,6 +43,7 @@ playBtn.addEventListener("click", (e) => {
     e.preventDefault();
     playlist = [];
     fetch(`/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`).then((response) => {
+        console.log(response);
         return response.json();
     })
     .then((data) => {

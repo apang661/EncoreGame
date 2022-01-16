@@ -12,8 +12,10 @@ app.use(express.static(html));
 app.get('/process_get', function (req, res) {
     song.add_spotify_playlist(req.query.link, (error, response) => {
         if (error) {
+            console.log(response, `error`);
             res.send(undefined);
         } else {
+            console.log(response, `success`);
             res.send(response);
         }
     });
