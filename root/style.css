@@ -204,15 +204,23 @@ h3 {
   padding-bottom: 20px;
 }
 
-.pm-link a{
+#alan-songs {
   white-space: nowrap;
   text-decoration: none;
   font-style: italic;
 }
 
-.pm-link a:hover{
+#alan-songs:hover {
   color: white;
   text-decoration: underline;
+}
+
+.pm-link button{
+  
+}
+
+.pm-link button:hover{
+  
 }
 
 #play-button {
