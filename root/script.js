@@ -115,11 +115,13 @@ function startGame() {
 }
 
 function continueGame() {
+    document.querySelector(`#song-input`).classList.remove(`hidden`);
+    answerButton.classList.remove(`hidden`);
+    document.querySelector(".final-score").classList.add('hidden');
     document.getElementById("score-display").innerHTML = "Score: "+ score;
     document.getElementById("song-image").src = `https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999`;
     document.getElementById("title").textContent = `What's This Song?`;
     document.querySelector(`.overlay`).style.backgroundColor = `rgb(25, 20, 20, 0.7)`;
-    document.querySelector(`#background-image2`).classList.add(`hidden`);
     shuffle();
     playSong();
 }
@@ -136,12 +138,13 @@ function restartGame() {
 
 function playAgain(){
     //ask user to play again
+    answerButton.textContent = "Play Again?";
+    if (document.querySelector(`#song-input`).classList.contains(`hidden`)) {
+        answerButton.classList.remove(`hidden`);
+    } 
     document.getElementById("title").textContent = `Game Over! 😣 Play Again?`;
-    document.querySelector(`#song-input`).classList.add(`hidden`);
-    document.querySelector(".final-score").classList.remove('hidden');
     document.querySelector(".final-score").textContent = `Final Score: ${score}`;
     document.querySelector(`#background-image2`).classList.remove(`hidden`);
-    answerButton.textContent = "Play Again?";
 }
 
 function shuffle() {
@@ -177,12 +180,20 @@ function increaseScore() {
     score += Math.floor((30-audio.currentTime)*(30-audio.currentTime));
     document.querySelector(`#correct`).volume = 0.3;
     document.querySelector(`#correct`).play();
+    document.querySelector(`#song-input`).classList.add(`hidden`);
+    answerButton.classList.add(`hidden`);
+    document.querySelector(".final-score").classList.remove('hidden');
+    document.querySelector(".final-score").textContent = `Correct!`;
 }
 
 function loseLife() {
     document.querySelector(`.overlay`).style.backgroundColor = `rgb(238,55,18,0.5)`;
     document.querySelector(`#incorrect`).volume = 0.3;
     document.querySelector(`#incorrect`).play();
+    document.querySelector(`#song-input`).classList.add(`hidden`);
+    answerButton.classList.add(`hidden`);
+    document.querySelector(".final-score").classList.remove('hidden');
+    document.querySelector(".final-score").textContent = `Incorrect`;
     attemptsRemaining--;
     updateLifeBar();
     isGameOver()
