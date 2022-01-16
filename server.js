@@ -5,7 +5,7 @@ const song = require('./song.js');
 const stringSimilarity = require("string-similarity");
 
 const port = 3000;
-const html = path.join(__dirname, "/root");
+const html = path.join(__dirname, '/root');
 
 app.use(express.static(html));
 
