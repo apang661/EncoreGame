@@ -24,7 +24,7 @@ document.getElementById("highscore").textContent = "High Score: " + highscore;
 playlistBtn.addEventListener(`click`, function(e) {
     e.preventDefault();
     playlist = [];
-    fetch(`process_get?link=${playlistInput.value}`,)
+    fetch(`/process_get?link=${playlistInput.value}`,)
         .then((response) => {
             return response.json();
         })
@@ -42,8 +42,8 @@ playlistBtn.addEventListener(`click`, function(e) {
 playBtn.addEventListener("click", (e) => {
     e.preventDefault();
     playlist = [];
-    fetch(`process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`, ).then((response) => {
-        console.log(response);
+    fetch(`/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`, ).then((response) => {
+        console.log(response.body);
         return response.json();
     })
     .then((data) => {
@@ -70,7 +70,7 @@ answerButton.addEventListener("click",
             restartGame();
         } else {
         let songInput = document.querySelector(`#song-input`).value;
-        fetch (`song?guess=${songInput}&ans=${currentSong.track_name}`)
+        fetch (`/song?guess=${songInput}&ans=${currentSong.track_name}`)
             .then(response => response.json())
             .then(bool => {
                 clearInterval(intervalId);
