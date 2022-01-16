@@ -47,6 +47,7 @@ async function add_spotify_playlist(link, callback) {
     }
     callback(undefined, all_playlist_songs);
   } catch (err) {
+    console.log(err);
     callback(err);
   }
 }
@@ -77,7 +78,7 @@ const getToken = async (
     );
     return response.data.access_token;
   } catch (err) {
-    console.log(err);
+    console.log(err.response);
   }
 };
 
