@@ -1,4 +1,3 @@
-
 const playlistInput = document.querySelector(`#playlist-input`);
 const playlistBtn = document.querySelector(`.playlist-button`);
 const encoreTitleButton = document.querySelector(`#encoreTitle`);
@@ -11,35 +10,18 @@ const NUM_GUESSES = 3;
 const WIN_THRESHOLD = 10;
 const LOWEST_TO_WIN = 0.75;
 let playlist;
-//         artist_name: 
-//         track_name: 
-//         track_image: 
-//         preview_mp3: 
 let currentSong;
 let score = 0;
 let attemptsRemaining;
 var intervalId;
 
-// const http = require('http'); // or 'https' for https:// URLs
-// const fs = require('fs');
-
-// const file = fs.createWriteStream("audio2.mp3");
-// const request = http.get("https://www.bensound.com/bensound-music/bensound-moose.mp3", function(response) {
-//   response.pipe(file);
-// });
-
-// let wave = new CircularAudioWave(document.getElementById('background-image'));
-// wave.loadAudio("audio1.mp3");
-
-// let wave = new Wave();
-// options = {type:"bars"};
-// wave.fromElement("currentSong","background-image", options);
-
+// Loads in saved high score
+let highscore = (localStorage.getItem("highScore") == undefined) ? 0 : localStorage.getItem("highScore");
+document.getElementById("highscore").textContent = "High Score: " + highscore;
 
 // Button for playing a custom playlist
 playlistBtn.addEventListener(`click`, function(e) {
     e.preventDefault();
-    console.log(playlistInput.value);
     playlist = [];
     fetch(`http://localhost:3000/process_get?link=${playlistInput.value}`)
         .then((response) => {
@@ -57,12 +39,9 @@ playlistBtn.addEventListener(`click`, function(e) {
 
 // Button for playing a default playlist
 playBtn.addEventListener("click", (e) => {
-    // const audio = document.querySelector('audio');
-    // audio.volume = 1;
-    // audio.play();
     e.preventDefault();
     playlist = [];
-    fetch(`http://localhost:3000/process_get?link=https://open.spotify.com/playlist/0wcczi2R26SZFtuuB0Iw1h?si=051303b3aff94837`).then((response) => {
+    fetch(`http://localhost:3000/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`).then((response) => {
         return response.json();
     })
     .then((data) => {
@@ -78,9 +57,7 @@ playBtn.addEventListener("click", (e) => {
 // Button for playing song
 encoreTitleButton.addEventListener("click", (e) => {
     e.preventDefault();
-    // document.location.href = '/index.html'
-    console.log(`click`);
-    console.log(audio.duration);
+    document.location.href = '/index.html'
 })
 
 // Event for entering answer
@@ -94,7 +71,6 @@ answerButton.addEventListener("click",
         fetch (`http://localhost:3000/song?guess=${songInput}&ans=${currentSong.track_name}`)
             .then(response => response.json())
             .then(bool => {
-                console.log(bool);
                 clearInterval(intervalId);
                 if (bool) {
                     setTimeout(function() {
@@ -114,18 +90,6 @@ answerButton.addEventListener("click",
 /* Game Functions */
 
 
-
-// function enterAnswer(songInput) {
-//     checkAns(songInput);
-//     //     shuffle();
-//     //     playSong();
-//     //     attemptsRemaining = NUM_GUESSES;
-//     // } else {
-//     //     attemptsRemaining -= 1;
-//     //     document.getElementById("attempts-display").innerHTML = attemptsRemaining + " Attempts Remaining";
-//     // }
-// }
-
 const startMenu = document.querySelector(`#start-menu`);
 const gameScreen = document.querySelector(`#main-game`);
 const lives = document.querySelector("#attempts-display");
@@ -133,6 +97,7 @@ const playlistMenu = document.querySelector(`#playlist-menu`);
 
 function startGame() {
     // Show game screen
+    document.querySelector(`#background-image2`).classList.add(`hidden`);
     startMenu.style.display = "none";
     playlistMenu.style.display = "none";
     gameScreen.style.display = "grid";
@@ -145,7 +110,6 @@ function startGame() {
     }
     shuffle();
     playSong();
-    console.log(currentSong);
 }
 
 function continueGame() {
@@ -153,6 +117,7 @@ function continueGame() {
     document.getElementById("song-image").src = `https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999`;
     document.getElementById("title").textContent = `What's This Song?`;
     document.querySelector(`.overlay`).style.backgroundColor = `rgb(25, 20, 20, 0.7)`;
+    document.querySelector(`#background-image2`).classList.add(`hidden`);
     shuffle();
     playSong();
 }
@@ -169,26 +134,26 @@ function restartGame() {
 
 function playAgain(){
     //ask user to play again
-    document.getElementById("title").textContent = `GameOver! 😣 Play Again?`;
+    document.getElementById("title").textContent = `Game Over! 😣 Play Again?`;
     document.querySelector(`#song-input`).classList.add(`hidden`);
     document.querySelector(".final-score").classList.remove('hidden');
     document.querySelector(".final-score").textContent = `Final Score: ${score}`;
+    document.querySelector(`#background-image2`).classList.remove(`hidden`);
     answerButton.textContent = "Play Again?";
 }
 
-function checkAns(key){
-    fetch (`http://localhost:3000/song?guess=${key}&ans=${currentSong.track_name}`)
-        .then(response => response.json())
-        .then(bool => console.log(bool));
-}
-
 function shuffle() {
-    let randomIndex = Math.floor(Math.random() * playlist.length);
-    currentSong = playlist[randomIndex];
-    while (!currentSong.preview_mp3) {
-        playlist.splice(playlist.indexOf(currentSong), 1);
-        randomIndex = Math.floor(Math.random() * playlist.length);
+    document.getElementById('song-input').value = "";
+    if (playlist.length > 0) {
+        let randomIndex = Math.floor(Math.random() * playlist.length);
         currentSong = playlist[randomIndex];
+        while (!currentSong.preview_mp3) {
+            playlist.splice(playlist.indexOf(currentSong), 1);
+            randomIndex = Math.floor(Math.random() * playlist.length);
+            currentSong = playlist[randomIndex];
+        }
+    } else {
+        gameOver();
     }
 }
 
@@ -208,10 +173,14 @@ function playSong() {
 
 function increaseScore() {
     score += Math.floor((30-audio.currentTime)*(30-audio.currentTime));
+    document.querySelector(`#correct`).volume = 0.3;
+    document.querySelector(`#correct`).play();
 }
 
 function loseLife() {
     document.querySelector(`.overlay`).style.backgroundColor = `rgb(238,55,18,0.5)`;
+    document.querySelector(`#incorrect`).volume = 0.3;
+    document.querySelector(`#incorrect`).play();
     attemptsRemaining--;
     updateLifeBar();
     isGameOver()
@@ -225,9 +194,16 @@ function updateLifeBar() {
 }
 
 function gameOver() {
-    audio.pause();
-    document.querySelector("#song-image").src = 'https://www.sonicseo.com/wp-content/uploads/2020/01/GettyImages-1055219634.jpg'
-    playAgain();
+    setTimeout(function() {
+        audio.pause();
+        document.querySelector("#song-image").src = 'https://www.sonicseo.com/wp-content/uploads/2020/01/GettyImages-1055219634.jpg'
+        playAgain();
+    }, 3000)
+    if(score > highscore){
+        highscore = score;
+        localStorage.setItem('highScore', score);
+        document.getElementById("highscore").innerHTML = "High score: " + highscore;
+    }
 }
 
 function displaySong() {

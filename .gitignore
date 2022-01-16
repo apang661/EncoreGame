@@ -130,3 +130,7 @@ dmypy.json
 
 
 node_modules
+
+process.env
+
+.env

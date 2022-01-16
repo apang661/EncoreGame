@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Whats My Song</title>
+        <title>Encore</title>
+        <link rel="icon" type="image/x-icon" href="https://static.wixstatic.com/media/df471e_43aa3e8f590e4a02a62b849ce5eab17d~mv2.png/v1/fill/w_400,h_386,al_c,q_85,usm_0.66_1.00_0.01/Rounded%20Music%20Note.webp">
         <link href="style.css" rel="stylesheet" />
         <link href="http://fonts.cdnfonts.com/css/gotham" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
@@ -15,22 +16,30 @@
             src="https://p.scdn.co/mp3-preview/180193873467a5b2e3b83c7be6f56694fb48d80c?cid=24bca80b252842bf85759b186bcce44f"
             crossorigin="anonymous">
         </audio>
+        <audio
+            id="correct"
+            src="./resources/correct.mp3"
+            crossorigin="anonymous">
+        </audio>
+        <audio
+            id="incorrect"
+            src="./resources/incorrect.mp3"
+            crossorigin="anonymous">
+        </audio>
         <div class="overlay"></div>
-            <!-- <image
-                id="background-image"
-                src="https://cdn.visit.ubc.ca/wp-content/uploads/2020/10/BACKGROUND.jpg">
-            </image> -->
+            <image
+                id="background-image2"
+                src="./resources/background.webp">
+            </image>
             <!-- <div id="background-image"></div> -->
             <canvas id="background-image"></canvas>
         <div class="topbar">
             <div>
                  <button id="encoreTitle"><h1>Encore</h1></button>
             </div>
-            <div class = "center">
-                <h5>High score:</h5> 
-            </div>
             <div class = "right">
                 <a href="about.html" id="forAbout">About</a>
+                <p id="highscore">High score: 0</p> 
             </div>
         </div>
         <div id="main-screen">
@@ -40,11 +49,12 @@
                     So you like music? Name every song.
                     </h2>
                 </div>
-                <button class="game-button def"> &#9658 Play from Default Playlist</button>
-                <button class="game-button" onclick="showPlaylistMenu()">&#9658 Play from Spotify Playlist</button>
+                <button class="game-button def"><h4> &#9658 &nbsp; Play from Default Playlist</h4></button>
+                <button class="game-button" onclick="showPlaylistMenu()">&#9658 &nbsp; Play from Spotify Playlist</button>
             </div>
             <form id="playlist-menu">
                 <label for=playlist-input><h3>Enter playlist link:<br></h3></label>
+                <div class="pm-link"><a href="https://open.spotify.com/user/12176080512?si=fd1834de184d42d2" target="_blank"><h3>Or try some premade playlists by us :)</h3></a></div>
                 <div><input id=playlist-input placeholder="Playlist Link"></input></div>
                 <div class="pb-div"><button class="game-button playlist-button">Enter</button></div>
             </form> 
@@ -73,7 +83,7 @@
 <script src="circular-audio-wave.min.js"></script>
   <script>
     let wave = new Wave();
-    const options = {type:"cubes", stroke:"0.5", colors: ["rgb(30, 215, 96), rgb(130, 90, 56)"]};
+    const options = {type:"cubes", stroke:"1", colors: ["rgb(35, 240, 106)"]};
     wave.fromElement("currentSong","background-image", options);
   </script>
   <script src="script.js"></script>

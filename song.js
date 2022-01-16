@@ -1,4 +1,3 @@
-const request = require(`request`);
 const axios = require("axios");
 require('dotenv').config({ path: './.env' });
 const qs = require("qs");
@@ -9,6 +8,7 @@ const { all } = require("express/lib/application");
 let token = "";
 let all_playlist_songs = [];
 
+// Add a Spotify playlist to the queue of songs
 async function add_spotify_playlist(link, callback) {
   all_playlist_songs.splice(0, all_playlist_songs.length);
   token = await getToken();
@@ -33,9 +33,13 @@ async function add_spotify_playlist(link, callback) {
     let response = await axios.get(url, options);
     const playlist = response.data;
     for (let i = 0; i < playlist.items.length; i++) {
+      let fixed_track_name = playlist.items[i].track.name;
+      if (fixed_track_name.includes("(")) {
+        fixed_track_name = fixed_track_name.substr(0, fixed_track_name.indexOf('('));
+      }
       let playlist_data = {
         artist_name: playlist.items[i].track.album.artists[0].name,
-        track_name: playlist.items[i].track.name,
+        track_name: fixed_track_name,
         track_image: playlist.items[i].track.album.images[0].url,
         preview_mp3: playlist.items[i].track.preview_url,
       };
@@ -47,6 +51,7 @@ async function add_spotify_playlist(link, callback) {
   }
 }
 
+// Retrieves Spotify API token
 const getToken = async (
   clientId = process.env.SPOTIFY_CLIENT_ID,
   clientSecret = process.env.SPOTIFY_CLIENT_SECRET

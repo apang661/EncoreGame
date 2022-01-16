@@ -11,7 +11,7 @@ body {
   font-size: 20px;
   height: 100%;
   overflow: hidden;
-  background-color: rgba(25, 20, 20);
+  background-color: rgb(0, 0, 0);
 }
 
 .hidden {
@@ -38,8 +38,8 @@ body {
 .topbar {
   position: fixed;
   top: 0;
+  padding: 10px;
   width: 100%;
-  background-color: rgb(51, 51, 51, 0);
   overflow: hidden;
   z-index: 20;
 }
@@ -71,9 +71,14 @@ body {
   font-weight: bold;
 }
 
-.center {
+.topbar p {
+  text-align: center;
   color: #fff;
-  
+  float: right;
+  width: 180px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  font-weight: bold;
 }
 
 .right {
@@ -90,15 +95,23 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(25, 20, 20, 0.7);
+  background-color: rgb(25, 20, 20, 0.6);
   /* backdrop-filter: blur(1.5px); */
   z-index: 5;
 }
 
 #background-image {
+  margin-top: 5%;
   width: 100%;
   height: auto;
-  background-color: rgba(25, 20, 20);
+  z-index: 4;
+}
+
+#background-image2 {
+  width: 100%;
+  height: auto;
+  background-color: rgb(0, 0, 0);
+  z-index: 3;
 }
 
 #main-screen {
@@ -113,8 +126,7 @@ body {
   line-height: 1.5;
   margin-top: 12%;
   margin-bottom: 3%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 10% 20px 10%;
 }
 
 p {
@@ -144,18 +156,19 @@ h3 {
   height: 4rem;
   border-radius: 5rem;
   background-color: rgb(30,215,96);
-  margin-left: 2em;
-  margin-right: 2em;
+  margin: 2em 2em 2em 2em;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 16px;
   transition: background-color 0.3s;
   font-weight: bold;
+  box-shadow: 0 0.5rem 0.5em rgb(22, 22, 22);
 }
 
 .game-button:hover {
   background-color: rgb(35, 240, 106);
   font-weight: bold;
   font-style: italic;
+  box-shadow: 0 0.6rem 0.7em rgb(22, 22, 22);
 }
 
 #playlist-menu {
@@ -166,11 +179,6 @@ h3 {
 #playlist-menu label {
   display: block;
   margin-bottom: 60px;
-}
-
-#playlist-input {
-  height: 30px;
-  width: 300px;
 }
 
 .playlist-button {
@@ -184,11 +192,27 @@ h3 {
 .playlist-button:hover {
   color: rgba(25, 20, 20);
   font-weight: bold;
-  font-style: italic;
+  width: 8.5rem;
+  height: 3.25rem;
 }
 
 .pb-div {
-  padding-top: 30px;
+  padding-top: 0px;
+}
+
+.pm-link {
+  padding-bottom: 20px;
+}
+
+.pm-link a{
+  white-space: nowrap;
+  text-decoration: none;
+  font-style: italic;
+}
+
+.pm-link a:hover{
+  color: white;
+  text-decoration: underline;
 }
 
 #play-button {
@@ -198,12 +222,14 @@ h3 {
   font-size: 40px;
 }
 
-#song-input {
+#song-input, #playlist-input {
   position: relative;
   height: 50px;
   width: 300px;
   margin: 20px;
   border-radius: 20px;
+  font-size: 20px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #song-image {
@@ -259,6 +285,6 @@ h3 {
   background-color: rgb(179,179,179);
 }
 
-#final-score {
-  margin: 10px 0 10px 0;
+.final-score {
+  margin: 15px 0 40px 0;
 }
