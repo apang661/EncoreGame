@@ -24,7 +24,7 @@ document.getElementById("highscore").textContent = "High Score: " + highscore;
 playlistBtn.addEventListener(`click`, function(e) {
     e.preventDefault();
     playlist = [];
-    fetch(`https://nwencore.herokuapp.com/process_get?link=${playlistInput.value}`, {mode: 'no-cors'})
+    fetch(`https://nwencore.herokuapp.com/process_get?link=${playlistInput.value}`,)
         .then((response) => {
             return response.json();
         })
@@ -42,7 +42,7 @@ playlistBtn.addEventListener(`click`, function(e) {
 playBtn.addEventListener("click", (e) => {
     e.preventDefault();
     playlist = [];
-    fetch(`https://nwencore.herokuapp.com/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`, {mode: 'no-cors'}).then((response) => {
+    fetch(`https://nwencore.herokuapp.com/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`, ).then((response) => {
         console.log(response);
         return response.json();
     })
