@@ -9,6 +9,7 @@ const audio = document.querySelector('audio');
 const NUM_GUESSES = 3;
 const WIN_THRESHOLD = 10;
 const LOWEST_TO_WIN = 0.75;
+const domain = `https://localhost:3000`;
 let playlist;
 let currentSong;
 let score = 0;
@@ -23,7 +24,7 @@ document.getElementById("highscore").textContent = "High Score: " + highscore;
 playlistBtn.addEventListener(`click`, function(e) {
     e.preventDefault();
     playlist = [];
-    fetch(`http://localhost:3000/process_get?link=${playlistInput.value}`)
+    fetch(`/process_get?link=${playlistInput.value}`)
         .then((response) => {
             return response.json();
         })
@@ -41,7 +42,7 @@ playlistBtn.addEventListener(`click`, function(e) {
 playBtn.addEventListener("click", (e) => {
     e.preventDefault();
     playlist = [];
-    fetch(`http://localhost:3000/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`).then((response) => {
+    fetch(`/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`).then((response) => {
         return response.json();
     })
     .then((data) => {
@@ -68,7 +69,7 @@ answerButton.addEventListener("click",
             restartGame();
         } else {
         let songInput = document.querySelector(`#song-input`).value;
-        fetch (`http://localhost:3000/song?guess=${songInput}&ans=${currentSong.track_name}`)
+        fetch (`/song?guess=${songInput}&ans=${currentSong.track_name}`)
             .then(response => response.json())
             .then(bool => {
                 clearInterval(intervalId);

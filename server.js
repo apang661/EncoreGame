@@ -4,7 +4,7 @@ const app = express();
 const song = require('./song.js');
 const stringSimilarity = require("string-similarity");
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const html = path.join(__dirname, '/root');
 
 app.use(express.static(html));
@@ -26,5 +26,5 @@ app.get('/song', function (req, res) {
  
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app listening at ${port}`)
 })
