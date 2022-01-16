@@ -26,6 +26,9 @@
             <div>
                  <button id="encoreTitle"><h1>Encore</h1></button>
             </div>
+            <div class = "center">
+                <h5>High score:</h5> 
+            </div>
             <div class = "right">
                 <a href="about.html" id="forAbout">About</a>
             </div>
@@ -42,14 +45,10 @@
             </div>
             <form id="playlist-menu">
                 <label for=playlist-input><h3>Enter playlist link:<br></h3></label>
-                <input id=playlist-input></input>
-                <button class="game-button playlist-button">Enter</button>
+                <div><input id=playlist-input placeholder="Playlist Link"></input></div>
+                <div class="pb-div"><button class="game-button playlist-button">Enter</button></div>
             </form> 
             <div id="main-game">
-                <div id="game-panel">
-                    <div id="score-display">Score: 10000</div>
-                    <div id="attempts-display">Lives: </div>
-                </div>
                 <form autocomplete="off">
                     <label for=song-input><h3 id='title'>What&#39s this song?<br></h3></label>
                     <img id="song-image" src="https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999">
@@ -58,10 +57,15 @@
                         <div id="timer"></div>
                     </div>
                     <br>
-                    <input id="song-input"></input>
+                    <input id="song-input" placeholder="Song Title"></input>
+                    <h3 class="final-score hidden">Score</h3>
                     <br>
                     <button id="answer-button" class="game-button form-button playlist-button">Enter</button>
-                </form> 
+                </form>
+                <div id="game-panel">
+                    <div id="score-display">Score: 0</div>
+                    <div id="attempts-display">Lives: </div>
+                </div>
             </div>
         </div>
     </body>

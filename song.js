@@ -10,6 +10,7 @@ let token = "";
 let all_playlist_songs = [];
 
 async function add_spotify_playlist(link, callback) {
+  all_playlist_songs.splice(0, all_playlist_songs.length);
   token = await getToken();
   const options = {
     headers: {
@@ -31,14 +32,10 @@ async function add_spotify_playlist(link, callback) {
   try {
     let response = await axios.get(url, options);
     const playlist = response.data;
-    let fixed_track_name = playlist.items[i].track.name;
-    if (fixed_track_name.includes("(")) {
-      fixed_track_name.substr(0, fixed_track_name.indexOf('('));
-    }
     for (let i = 0; i < playlist.items.length; i++) {
       let playlist_data = {
         artist_name: playlist.items[i].track.album.artists[0].name,
-        track_name: fixed_track_name,
+        track_name: playlist.items[i].track.name,
         track_image: playlist.items[i].track.album.images[0].url,
         preview_mp3: playlist.items[i].track.preview_url,
       };

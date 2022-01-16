@@ -18,6 +18,7 @@ let playlist;
 let currentSong;
 let score = 0;
 let attemptsRemaining;
+var intervalId;
 
 // const http = require('http'); // or 'https' for https:// URLs
 // const fs = require('fs');
@@ -86,23 +87,27 @@ encoreTitleButton.addEventListener("click", (e) => {
 answerButton.addEventListener("click",
     function (e){
         e.preventDefault();
+        if (answerButton.textContent == "Play Again?") {
+            restartGame();
+        } else {
         let songInput = document.querySelector(`#song-input`).value;
         fetch (`http://localhost:3000/song?guess=${songInput}&ans=${currentSong.track_name}`)
             .then(response => response.json())
             .then(bool => {
-                setTimeout(function() {
-                    continueGame();
-                }, 3000)
                 console.log(bool);
+                clearInterval(intervalId);
                 if (bool) {
+                    setTimeout(function() {
+                        continueGame();
+                    }, 3000)
                     increaseScore();
-                    document.querySelector(`.overlay`).style.backgroundColor = `rgb(146,208,80, 0.5)`
+                    document.querySelector(`.overlay`).style.backgroundColor = `rgb(146,208,80, 0.5)`;
+                    displaySong();
                 } else {
                     loseLife();
-                    document.querySelector(`.overlay`).style.backgroundColor = `rgb(238,55,18,0.5)`
                 }
-                displaySong();
             });
+        }
     });
 
 
@@ -152,8 +157,23 @@ function continueGame() {
     playSong();
 }
 
+function restartGame() {
+    score = 0;
+    attemptsRemaining = NUM_GUESSES;
+    document.querySelector(`#song-input`).classList.remove(`hidden`);
+    document.querySelector(".final-score").classList.add('hidden');
+    answerButton.textContent = "Enter";
+    updateLifeBar();
+    continueGame();
+}
+
 function playAgain(){
     //ask user to play again
+    document.getElementById("title").textContent = `GameOver! 😣 Play Again?`;
+    document.querySelector(`#song-input`).classList.add(`hidden`);
+    document.querySelector(".final-score").classList.remove('hidden');
+    document.querySelector(".final-score").textContent = `Final Score: ${score}`;
+    answerButton.textContent = "Play Again?";
 }
 
 function checkAns(key){
@@ -191,20 +211,23 @@ function increaseScore() {
 }
 
 function loseLife() {
+    document.querySelector(`.overlay`).style.backgroundColor = `rgb(238,55,18,0.5)`;
     attemptsRemaining--;
-    if (attemptsRemaining < 1) {
-        gameOver();
-    }
-    for (let i = attemptsRemaining; i >= 0; i--) {
-        lives.innerHTML = 'Lives: ';
+    updateLifeBar();
+    isGameOver()
+}
+
+function updateLifeBar() {
+    lives.innerHTML = 'Lives: ';
+    for (let i = attemptsRemaining; i > 0; i--) {
         lives.innerHTML += `<img class="life" src = "life.png">`;
     }
-    
 }
 
 function gameOver() {
-    alert("Game Over")
-    document.location.href = '/index.html'
+    audio.pause();
+    document.querySelector("#song-image").src = 'https://www.sonicseo.com/wp-content/uploads/2020/01/GettyImages-1055219634.jpg'
+    playAgain();
 }
 
 function displaySong() {
@@ -214,26 +237,28 @@ function displaySong() {
 }
 
 function startTimer() {
-    let time = 29;
-    const song = currentSong;
-    var intervalId = setInterval(() => {
-        timer.style.width = `${((29 - time) / 29)*100}%`;
-        if (time != 0) {
-            if (song === currentSong) {
-                time -= 0.01;
-            } else {
-                clearInterval(intervalId);
-                console.log("poo2");
-            }
+    let time = 15;
+    intervalId = setInterval(() => {
+        timer.style.width = `${((15 - time) / 15)*100}%`;
+        if (!(time < 0.0001)) {
+            time -= 0.01;
         } else {
-            console.log("poo");
             clearInterval(intervalId);
             loseLife();
-            displaySong();
-            setTimeout(function() {
-                continueGame();
-            }, 3000)
         }
     }, 10);
     
+}
+
+function isGameOver() {
+    displaySong();
+    if (attemptsRemaining < 1) {
+        gameOver();
+        return true;
+    } else {
+        setTimeout(function () {
+            continueGame();
+        }, 3000);
+    }
+    return false;
 }
