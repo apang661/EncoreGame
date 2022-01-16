@@ -11,6 +11,10 @@ app.use(express.static(html));
 
 app.get('/process_get', function (req, res) {
     song.add_spotify_playlist(req.query.link, (error, response) => {
+        res.set({
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+        });
         if (error) {
             console.log(response, `error`);
             res.send(undefined);
