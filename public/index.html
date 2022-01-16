@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Whats My Song</title>
+        <link href="style.css" rel="stylesheet" />
+        <link href="http://fonts.cdnfonts.com/css/gotham" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
+    </head>
+    <body>
+        <audio 
+            id="currentSong" 
+            src="audio1.mp3">
+        </audio>
+        <div class="overlay"></div>
+            <!-- <image
+                id="background-image"
+                src="https://cdn.visit.ubc.ca/wp-content/uploads/2020/10/BACKGROUND.jpg">
+            </image> -->
+            <!-- <div id="background-image"></div> -->
+            <canvas id="background-image"></canvas>
+        <div class="topbar">
+            <div>
+                 <button id="encoreTitle"><h1>Encore</h1></button>
+            </div>
+            <div class = "right">
+                <a href="about.html" id="forAbout">About</a>
+            </div>
+        </div>
+        <div id="main-screen">
+            <div id="start-menu">
+                <div id="logo">
+                    <h2>
+                    Guess the song!
+                    </h2>
+                </div>
+                <button class="game-button def">&#9658 Play from Default Playlist</button>
+                <button class="game-button submit-playlist" onclick="showPlaylistMenu()">&#9658 Play from Spotify Playlist</button>
+            </div>
+            <form id="playlist-menu">
+                <label for=playlist-input><h3>Enter playlist link:<br></h3></label>
+                <input id=playlist-input></input>
+                <button class="game-button form-button playlist-button">Enter</button>
+            </form> 
+            <div id="main-game">
+                <div id="game-panel">
+                    <div id="score-display">Score: 10000</div>
+                    <div id="correct-display">3 Tries Remaining</div>
+                </div>
+                <form>
+                    <label for=song-input><h3>What's this song?<br></h3></label>
+                    <img id="song-image" src="https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999">
+                    <br>
+                    <input id="song-input"></input>
+                    <br>
+                    <button id="answer-button" class="game-button form-button playlist-button">Enter</button>
+                </form> 
+            </div>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/gh/foobar404/wave.js/dist/bundle.iife.js"></script>
+<script src="circular-audio-wave.min.js"></script>
+  <script>
+    let wave = new Wave();
+    const options = {type:"bars"};
+    wave.fromElement("currentSong","background-image", options);
+  </script>
+  <script src="script.js"></script>
+</html>

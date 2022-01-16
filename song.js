@@ -1,10 +1,13 @@
 const request = require(`request`);
 const axios = require("axios");
-// import got from "got";
+require('dotenv').config({ path: './.env' });
 const qs = require("qs");
 
-async function add_spotify_playlist(link) {
-  let token = await getToken();
+let token = "";
+let all_playlist_songs = [];
+
+async function add_spotify_playlist(link, callback) {
+  token = await getToken();
   const options = {
     headers: {
       Authorization: "Bearer " + token,
@@ -16,13 +19,22 @@ async function add_spotify_playlist(link) {
     playlist_id_split.indexOf("?")
   );
   let url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?market=ES`;
-  // await axios.get(url, options).then(async (response) => {
-  //   const playlist_items = JSON.parse(response.body).items;
-  //   console.log(playlist_items);
-  // });
-  let response = await axios.get(url, options);
-  let weatherdata = response.data;
-  console.log(weatherdata);
+  try {
+    let response = await axios.get(url, options);
+    const playlist = response.data;
+    for (let i = 0; i < playlist.items.length; i++) {
+      let playlist_data = {
+        artist_name: playlist.items[i].track.album.artists[0].name,
+        track_name: playlist.items[i].track.name,
+        track_image: playlist.items[i].track.album.images[0].url,
+        preview_mp3: playlist.items[i].track.preview_url,
+      };
+      all_playlist_songs.push(playlist_data);
+    }
+    callback(undefined, all_playlist_songs);
+  } catch (err) {
+    callback(err);
+  }
 }
 
 const getToken = async (
@@ -54,6 +66,9 @@ const getToken = async (
   }
 };
 
-add_spotify_playlist(
-  "https://open.spotify.com/playlist/7BqZdu5sOhRdjoKmTP3Hdx?si=53a4a5c850e74bb7"
-);
+
+
+module.exports = {
+  add_spotify_playlist: add_spotify_playlist,
+  all_playlist_songs: all_playlist_songs,
+}
