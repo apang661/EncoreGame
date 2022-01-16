@@ -205,22 +205,19 @@ h3 {
 }
 
 #alan-songs {
+  color: #fff;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
   white-space: nowrap;
   text-decoration: none;
   font-style: italic;
+  background: none;
+  border: none;
 }
 
 #alan-songs:hover {
-  color: white;
   text-decoration: underline;
-}
-
-.pm-link button{
-  
-}
-
-.pm-link button:hover{
-  
 }
 
 #play-button {
