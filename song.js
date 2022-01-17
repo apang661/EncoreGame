@@ -32,6 +32,7 @@ async function add_spotify_playlist(link, callback) {
   try {
     let response = await axios.get(url, options);
     const playlist = response.data;
+    console.log(playlist.items.length);
     for (let i = 0; i < playlist.items.length; i++) {
       let fixed_track_name = playlist.items[i].track.name;
       if (fixed_track_name.includes("(")) {
@@ -45,6 +46,7 @@ async function add_spotify_playlist(link, callback) {
       };
       all_playlist_songs.push(playlist_data);
     }
+    console.log(all_playlist_songs.length);
     callback(undefined, all_playlist_songs);
   } catch (err) {
     console.log(err);
