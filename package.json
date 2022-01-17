@@ -1,6 +1,7 @@
-{"scripts": {
-  "start": "node server.js"
-},
+{
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "@foobar404/wave": "^1.2.7",
     "axios": "^0.24.0",
