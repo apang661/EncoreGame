@@ -24,6 +24,8 @@ document.getElementById("highscore").textContent = "High Score: " + highscore;
 playlistBtn.addEventListener(`click`, function(e) {
     e.preventDefault();
     playlist = [];
+    playlist.disabled = true;
+    setTimeout(function() { playlist.disabled = false }, 3000);
     fetch(`/process_get?link=${playlistInput.value}`,)
         .then((response) => {
             return response.json();
@@ -41,6 +43,8 @@ playlistBtn.addEventListener(`click`, function(e) {
 // Button for playing a default playlist
 playBtn.addEventListener("click", (e) => {
     e.preventDefault();
+    playBtn.disabled = true;
+    setTimeout(function() { playBtn.disabled = false }, 3000);
     playlist = [];
     fetch(`/process_get?link=https://open.spotify.com/playlist/3XM4qNNOrn2PcaiyIe8nax?si=81ef02f784c64af7`, ).then((response) => {
         console.log(response.body);
@@ -104,7 +108,6 @@ function startGame() {
     playlistMenu.style.display = "none";
     gameScreen.style.display = "grid";
     gameScreen.style.gridTemplateColumns = "1fr";
-    
     
     attemptsRemaining = NUM_GUESSES;
     for (let i = attemptsRemaining; i > 0; i--) {
